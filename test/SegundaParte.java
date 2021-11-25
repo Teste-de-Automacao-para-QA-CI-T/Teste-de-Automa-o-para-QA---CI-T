@@ -28,11 +28,15 @@ public class SegundaParte extends TestCase {
         driver.findElement(By.id("query")).sendKeys(category);//Seleciona o elemento de input de pesquisa pelo ID e preenche ele
         driver.findElement(By.xpath("//*[@id=\"page-top\"]/div[1]/form/div/button")).click();//Seleciona o botão pelo caminho xpath
 
-        WebElement element = driver.findElement(By.xpath("//*[@id=\"page-top\"]/div[2]/table/tbody")); //Cria um WebElement e joga a listagem de questões nele através do caminho xpath
-        String texto = element.getText(); //Cria uma String e pega o conteudo da listagem em forma de texto
+        WebElement lista = driver.findElement(By.xpath("//*[@id=\"page-top\"]/div[2]/table/tbody")); //Cria um WebElement e joga a listagem de questões nele através do caminho xpath
+        String texto = lista.getText(); //Cria uma String e pega o conteudo da listagem em forma de texto
         Stream<String> lines = texto.lines(); //Utilizando o método lines() para processar a string separadamente
         long quantidadeLinha = lines.count(); //Pegando a quantidade de linhas da listagem de questões
         assertEquals(quantidadeLinha, 25); //Comparando a quantidade de linhas encontradas com o valor esperado
+        
+        WebElement controlePaginacao = driver.findElement(By.xpath("//*[@id=\"page-top\"]/div[2]/center/ul")); //Cria um WebElement e joga o controle de paginação nele através do caminho xpath
+        boolean validacaoEncontrada = controlePaginacao.isDisplayed(); // Verifica se o controle de paginação está aparecendo
+        assertEquals(validacaoEncontrada, true); //Comparando a validação do controle de paginação com o valor esperado
         
         driver.close();//Fechar o driver após a execução das atividades
 
